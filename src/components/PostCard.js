@@ -49,12 +49,12 @@ const PostCard = ({ post }) => {
         <Link to={slug}>
           <GatsbyImage image={img} className="card-image" />
           <h2>{title}</h2>
-          <p>{post.excerpt}</p>
-          <Meta>
+          {/* <p>{post.excerpt}</p> */}
+          {/* <Meta>
             <h4>Written by {author}</h4>
             <h4>Posted on {date}</h4>
             <div className="btn">Read Article</div>
-          </Meta>
+          </Meta> */}
         </Link>
       </Anim>
     </Card>

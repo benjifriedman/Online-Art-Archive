@@ -16,11 +16,7 @@ const PostList = ({ posts }) => {
     <>
       <section>
         <Anim>
-          <h2>
-            The latest & greatest high-perfomance vehicles from around the
-            world. Filled with all the information you need to make the right
-            choice.
-          </h2>
+          <h2>Online Art Archive</h2>
         </Anim>
 
         <List>
