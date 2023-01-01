@@ -5,7 +5,7 @@ import { useStaticQuery, graphql } from "gatsby"
 
 const getPosts = graphql`
   {
-    allMdx(sort: { fields: frontmatter___date, order: DESC }) {
+    allMdx(sort: { frontmatter: { date: DESC } }) {
       totalCount
       edges {
         node {

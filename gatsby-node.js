@@ -11,6 +11,7 @@ exports.createPages = async ({ actions, graphql }) => {
         edges {
           node {
             frontmatter {
+              title
               slug
             }
           }
@@ -18,12 +19,16 @@ exports.createPages = async ({ actions, graphql }) => {
       }
     }
   `)
+
   posts.forEach(({ node }) => {
-    const { slug } = node.frontmatter
+    const { slug, title } = node.frontmatter
+    if (!title) return
+
     createPage({
       path: slug,
       component: require.resolve("./src/templates/post-template.js"),
       context: {
+        title: title,
         slug: slug,
       },
     })
