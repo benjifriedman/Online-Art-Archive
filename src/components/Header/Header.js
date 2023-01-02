@@ -16,7 +16,7 @@ const Header = () => {
     <>
       <HeaderStyles className={scroll ? "nav__scrolled" : null}>
         <h1>
-          <Link to="/">Koop</Link>
+          <Link to="/">Benji Online Art Archive</Link>
         </h1>
         <Nav />
       </HeaderStyles>

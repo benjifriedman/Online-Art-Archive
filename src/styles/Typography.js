@@ -12,11 +12,11 @@ const Typography = createGlobalStyle`
     letter-spacing: -2px;
     line-height: 1.1em;
 
-    &:after {
-        content: '.';
-        display: inline-block;
-        color: var(--highlight);
-    }
+    // &:after {
+    //     content: '.';
+    //     display: inline-block;
+    //     color: var(--highlight);
+    // }
     }
 
     h2 {

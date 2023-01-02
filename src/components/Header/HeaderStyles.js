@@ -10,7 +10,7 @@ export const HeaderStyles = styled.header`
   left: 0;
   width: 100%;
   z-index: 98;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  transition: background-color 0.1s ease, box-shadow 0.1s ease;
 
   &.nav__scrolled {
     background-color: #fff;
@@ -21,7 +21,7 @@ export const HeaderStyles = styled.header`
     a {
       color: var(--dark);
       text-decoration: none;
-      transition: color 0.3s ease;
+      transition: color 0.1s ease;
     }
 
     &:hover {

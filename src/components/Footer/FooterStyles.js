@@ -38,7 +38,7 @@ export const FooterStyles = styled.footer`
   h2 {
     a {
       text-decoration: none;
-      transition: color 0.3s;
+      transition: color 0.1s;
     }
 
     &:hover {
@@ -46,5 +46,6 @@ export const FooterStyles = styled.footer`
         color: var(--highlight);
       }
     }
+    font-size: 2rem;
   }
 `

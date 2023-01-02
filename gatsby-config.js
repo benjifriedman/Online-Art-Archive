@@ -7,7 +7,7 @@
 module.exports = {
   /* Your site config here */
   siteMetadata: {
-    title: `Koop`,
+    title: `Benji Friedman Online Art Archive`,
     titleTemplate: `%s | A simple MDX blog`,
     description: `Built using GatsbyJS and serving content using markdown`,
     siteUrl: `https://koop-blog.netlify.app`, // Cannot include a trailing slash

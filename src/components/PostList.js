@@ -15,9 +15,9 @@ const PostList = ({ posts }) => {
   return (
     <>
       <section>
-        <Anim>
+        {/* <Anim>
           <h2>Online Art Archive</h2>
-        </Anim>
+        </Anim> */}
 
         <List>
           {posts.map(({ node }, index) => {

@@ -8,10 +8,10 @@ const Card = styled.article`
   margin-top: 2.5rem;
   margin-bottom: 2.5rem;
 
-  &:hover {
-    .card-image {
-      transform: scale(1.025);
-    }
+  // &:hover {
+  //   .card-image {
+  //     transform: scale(1.025);
+  //   }
   }
 
   a {
@@ -19,8 +19,8 @@ const Card = styled.article`
     color: var(--dark);
   }
   .card-image {
-    height: 450px;
-    transition: transform 0.35s;
+    height: 250px;
+    transition: transform 0.15s;
   }
 
   @media (min-width: 600px) {
