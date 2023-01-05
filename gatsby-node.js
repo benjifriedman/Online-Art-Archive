@@ -17,6 +17,27 @@ const creds = {
   service_email: process.env.GOOGLE_CLIENT_EMAIL,
 }
 
+exports.createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+  const typeDefs = `
+    type DriveFileNode implements Node @dontInfer {
+      id: ID!
+      name: String!
+      parent: String!
+      children: [String!]
+      url: String!
+      createdTime: Date!
+      webContentLink: String!
+      fields: Field!
+    }
+    type Field {
+      slug: String!
+    }
+  `
+
+  createTypes(typeDefs)
+}
+
 exports.sourceNodes = async (
   { actions, createContentDigest, createNodeId, getNodesByType },
   options
