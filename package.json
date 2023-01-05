@@ -10,13 +10,15 @@
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
     "start": "gatsby develop",
     "serve": "gatsby serve",
-    "clean": "gatsby clean",
+    "clean": "gatsby clean && rimraf src/content",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
     "@mdx-js/mdx": "^2.2.1",
     "@mdx-js/react": "^2.2.1",
+    "axios": "^1.2.2",
     "babel-plugin-styled-components": "^2.0.7",
+    "dotenv": "^16.0.3",
     "framer-motion": "^8.0.2",
     "gatsby": "^5.3.3",
     "gatsby-image": "^3.11.0",
@@ -29,6 +31,7 @@
     "gatsby-remark-images": "^7.3.1",
     "gatsby-source-filesystem": "^5.3.1",
     "gatsby-transformer-sharp": "^5.3.1",
+    "googleapis": "^110.0.0",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -42,7 +45,8 @@
   "devDependencies": {
     "@netlify/plugin-gatsby": "^3.5.0",
     "gatsby-plugin-netlify": "^5.1.0",
-    "prettier": "^2.8.1"
+    "prettier": "^2.8.1",
+    "rimraf": "^3.0.2"
   },
   "repository": {
     "type": "git",

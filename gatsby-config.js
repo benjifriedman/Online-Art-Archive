@@ -4,6 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/gatsby-config/
  */
 
+const path = require('node:path')
+require('dotenv').config()
+
 module.exports = {
   /* Your site config here */
   siteMetadata: {
