@@ -233,6 +233,13 @@ const recursiveFoldersAndFiles = async (
   createNodeId,
   parentId
 ) => {
+  // make files iterable
+  if (array && !array.length) {
+    array = [array]
+  } else {
+    array = array || []
+  }
+
   // loop through the files
   for (let file of array) {
     // check the mimetype if it's a folder
@@ -254,13 +261,6 @@ const recursiveFoldersAndFiles = async (
       let files = await getFolder(drive, file.id)
       console.log(`Setting new parent at ${parent}/${file.name}`)
       console.log(`Recrusively searching in folder...`)
-
-      // make files iterable
-      if (files && !files.length) {
-        files = [files]
-      } else {
-        files = files || []
-      }
 
       await recursiveFoldersAndFiles(
         files,

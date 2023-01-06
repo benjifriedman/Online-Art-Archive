@@ -100,7 +100,7 @@ export const query = graphql`
         author
         image {
           childImageSharp {
-            gatsbyImageData(layout: FULL_WIDTH, formats: [AUTO, WEBP])
+            gatsbyImageData(layout: FULL_WIDTH, formats: [AUTO, WEBP, PNG])
           }
         }
       }
