@@ -33,6 +33,15 @@ exports.createSchemaCustomization = ({ actions }) => {
     type Field {
       slug: String!
     }
+    type DriveFolderNode implements Node @dontInfer {
+      id: ID!
+      name: String!
+      parent: String!
+      children: [String!]
+      url: String!
+      createdTime: Date!
+      slug: String!
+    }
   `
 
   createTypes(typeDefs)
@@ -102,6 +111,7 @@ function createFolderNode({ createNode, createNodeId, file, parentId, path }) {
   const { webContentLink, createdTime } = file
   const folderNode = Object.assign({}, file, {
     id: folderId,
+    name: file.name,
     parent: parentId,
     children: [],
     url: webContentLink?.split('&')[0] || 'not found',
@@ -113,7 +123,6 @@ function createFolderNode({ createNode, createNodeId, file, parentId, path }) {
       content: folderContent,
       contentDigest: folderContentDigest,
     },
-    name: file.name,
   })
 
   createNode(folderNode)
