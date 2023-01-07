@@ -36,7 +36,7 @@ const renderDriveAssets = (edges, children, singleFilePages, title) => {
 
         return (
           <div key={id}>
-            <hr
+            {/* <hr
               style={{ marginTop: 0 }}
               className="separator separator__large"
             />
@@ -44,7 +44,7 @@ const renderDriveAssets = (edges, children, singleFilePages, title) => {
               Back to all posts
             </Link>
             <hr className="separator" />
-            <h1>{name}</h1>
+            <h1>{name}</h1> */}
 
             <img
               className="gatsby-resp-image-img"
@@ -52,12 +52,12 @@ const renderDriveAssets = (edges, children, singleFilePages, title) => {
               alt={name}
             />
 
-            <div className="post__body">{children}</div>
+            {/* <div className="post__body">{children}</div>
             <hr className="separator" />
             <h2>
               Posted on <span>{date}</span>
             </h2>
-            <hr className="separator separator__large" />
+            <hr className="separator separator__large" /> */}
           </div>
         )
       })}
