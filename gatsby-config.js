@@ -21,6 +21,8 @@ module.exports = {
     facebookName: `https://www.facebook.com`,
     instagramName: `https://www.instagram.com`,
     linkedinName: `https://www.linkedin.com/in/morgan-baker-development`,
+    singleFilePages: true,
+    lang: 'en',
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

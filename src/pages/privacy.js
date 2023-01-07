@@ -1,5 +1,7 @@
-import React from "react"
-import Layout from "../components/layout"
+import React from 'react'
+import Layout from '../components/layout'
+import { graphql } from 'gatsby'
+import SEO from '../components/Seo'
 
 const PrivacyPage = () => {
   return (
@@ -75,3 +77,21 @@ const PrivacyPage = () => {
 }
 
 export default PrivacyPage
+
+export const Head = ({ data }) => {
+  const { title, image } = data.site.siteMetadata
+
+  return <SEO title={title} image={image} />
+}
+
+export const query = graphql`
+  query {
+    site {
+      siteMetadata {
+        title
+        image
+        singleFilePages
+      }
+    }
+  }
+`

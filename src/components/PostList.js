@@ -1,7 +1,7 @@
-import React from "react"
-import PostCard from "./PostCard"
-import styled from "styled-components"
-import Anim from "./Anim"
+import React from 'react'
+import PostCard from './PostCard'
+import styled from 'styled-components'
+import Anim from './Anim'
 
 const List = styled.div`
   @media (min-width: 600px) {
@@ -11,7 +11,20 @@ const List = styled.div`
   }
 `
 
-const PostList = ({ posts }) => {
+const removeFileExt = (name) => {
+  // rename name without file extension
+  if (name.includes('.png')) {
+    name = name.split('.png')[0]
+  } else if (name.includes('.jpg')) {
+    name = name.split('.jpg')[0]
+  } else if ((name = name.split('.jpeg')[0])) {
+    name = name.split('.jpeg')[0]
+  }
+
+  return name
+}
+
+const PostList = ({ posts, singleFilePages }) => {
   return (
     <>
       <section>
@@ -21,7 +34,10 @@ const PostList = ({ posts }) => {
 
         <List>
           {posts.map(({ node }, index) => {
-            return <PostCard key={index} post={node} />
+            const postLink = singleFilePages
+              ? `${node.fields.slug}/${removeFileExt(node.name)}`
+              : node.fields.slug
+            return <PostCard key={index} post={node} postLink={postLink} />
           })}
         </List>
       </section>

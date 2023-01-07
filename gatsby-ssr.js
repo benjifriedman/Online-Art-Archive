@@ -1,5 +1,10 @@
-import React from "react"
-import { AnimatePresence } from "framer-motion"
+const { siteMetadata } = require('./gatsby-config')
+
+exports.onRenderBody = ({ setHtmlAttributes }) => {
+  const { title, lang } = siteMetadata
+
+  setHtmlAttributes({ lang, title })
+}
 
 // export function wrapPageElement({ element }) {
 //   return <AnimatePresence mode="wait">{element}</AnimatePresence>

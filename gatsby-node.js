@@ -61,7 +61,7 @@ exports.sourceNodes = async (
   const parentId = '__SOURCE__'
 
   // Start downloading recursively through all folders.
-  console.time(`Searching Google drive content...`, cmsFiles)
+  console.time(`Searching Google drive content...`)
   await recursiveFoldersAndFiles(
     cmsFiles,
     parent,
@@ -163,9 +163,18 @@ exports.createPages = async ({ actions, graphql }) => {
     data: {
       allMdx: { edges: posts },
       allDriveFolderNode: { edges: driveFolders },
+      allDriveFileNode: { edges: driveFiles },
+      site: {
+        siteMetadata: { singleFilePages },
+      },
     },
   } = await graphql(`
     {
+      site {
+        siteMetadata {
+          singleFilePages
+        }
+      }
       allMdx {
         edges {
           node {
@@ -184,10 +193,22 @@ exports.createPages = async ({ actions, graphql }) => {
           }
         }
       }
+      allDriveFileNode {
+        edges {
+          node {
+            name
+            fields {
+              slug
+            }
+          }
+        }
+      }
     }
   `)
 
-  createDrivePages(driveFolders, createPage)
+  const driveData = { driveFolders, driveFiles }
+
+  createDrivePages(driveData, createPage, singleFilePages)
   createMDXPages(posts, createPage)
 }
 
@@ -209,10 +230,11 @@ function createMDXPages(mdxNodes, cb) {
   })
 }
 
-function createDrivePages(driveNodes, cb) {
-  driveNodes.forEach(({ node }) => {
-    const { name, slug } = node
+function createDrivePages(driveData, cb, singleFilePages) {
+  const { driveFolders, driveFiles } = driveData
 
+  driveFolders.forEach(({ node }) => {
+    const { name, slug } = node
     const page = {
       path: slug,
       component: require.resolve('./src/templates/post-template.js'),
@@ -223,6 +245,32 @@ function createDrivePages(driveNodes, cb) {
     }
     cb(page)
   })
+
+  if (singleFilePages) {
+    driveFiles.forEach(({ node }) => {
+      const {
+        name,
+        fields: { slug },
+      } = node
+      let imagePath = name
+
+      // rename name without file extension
+      name.includes('.png') ? (imagePath = name.split('.png')[0]) : ''
+      name.includes('.jpg') ? (imagePath = name.split('.jpg')[0]) : ''
+      name.includes('.jpeg') ? (imagePath = name.split('.jpeg')[0]) : ''
+
+      const page = {
+        path: `${slug}/${imagePath}`,
+        component: require.resolve('./src/templates/post-template.js'),
+        context: {
+          title: name,
+          slug,
+          filePath: `${slug}/${imagePath}`,
+        },
+      }
+      cb(page)
+    })
+  }
 }
 
 const recursiveFoldersAndFiles = async (
@@ -245,7 +293,6 @@ const recursiveFoldersAndFiles = async (
     // check the mimetype if it's a folder
     if (file.mimeType === FOLDER) {
       // if it's a folder, create the path
-      console.log(`Creating folder path at ${parent}/${file.name}`)
       const folderPath = parent === '' ? file.name : `${parent}/${file.name}`
 
       // create the folder node
@@ -259,8 +306,6 @@ const recursiveFoldersAndFiles = async (
 
       // Then, get the files inside and run the function again
       let files = await getFolder(drive, file.id)
-      console.log(`Setting new parent at ${parent}/${file.name}`)
-      console.log(`Recrusively searching in folder...`)
 
       await recursiveFoldersAndFiles(
         files,
@@ -276,7 +321,6 @@ const recursiveFoldersAndFiles = async (
       file.mimeType === 'image/jpg'
     ) {
       // if it's a file, create a path referencing the parent folder
-      console.log(`Creating image file path at ${parent}/${file.name}`)
       const filePath = parent === '' ? file.name : `${parent}/${file.name}`
 
       // create image nodes

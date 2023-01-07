@@ -1,10 +1,33 @@
-import React from "react"
-import PostList from "../components/PostList"
-import Layout from "../components/layout"
-import { useStaticQuery, graphql } from "gatsby"
+import React from 'react'
+import PostList from '../components/PostList'
+import Layout from '../components/layout'
+import { graphql } from 'gatsby'
+import SEO from '../components/Seo'
 
-const getPosts = graphql`
-  {
+const Index = ({ data }) => {
+  const response = data
+
+  // const posts = response?.allMdx?.edges
+  const posts = response?.allDriveFileNode?.edges
+  const singleFilePages = response.site?.siteMetadata?.singleFilePages
+
+  return (
+    <Layout>
+      <PostList posts={posts} singleFilePages={singleFilePages} />
+    </Layout>
+  )
+}
+
+export default Index
+
+export const Head = ({ data }) => {
+  const { title, image } = data.site.siteMetadata
+
+  return <SEO title={title} image={image} />
+}
+
+export const query = graphql`
+  query {
     allMdx(sort: { frontmatter: { date: DESC } }) {
       totalCount
       edges {
@@ -28,19 +51,23 @@ const getPosts = graphql`
         }
       }
     }
+    allDriveFileNode {
+      edges {
+        node {
+          name
+          fields {
+            slug
+          }
+          webContentLink
+        }
+      }
+    }
+    site {
+      siteMetadata {
+        title
+        image
+        singleFilePages
+      }
+    }
   }
 `
-
-const Index = () => {
-  const response = useStaticQuery(getPosts)
-
-  const posts = response.allMdx.edges
-
-  return (
-    <Layout>
-      <PostList posts={posts} />
-    </Layout>
-  )
-}
-
-export default Index

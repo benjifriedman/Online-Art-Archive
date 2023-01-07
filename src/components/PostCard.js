@@ -1,8 +1,8 @@
-import React from "react"
-import { GatsbyImage } from "gatsby-plugin-image"
-import { Link } from "gatsby"
-import styled from "styled-components"
-import Anim from "./Anim"
+import React from 'react'
+import { GatsbyImage } from 'gatsby-plugin-image'
+import { Link } from 'gatsby'
+import styled from 'styled-components'
+import Anim from './Anim'
 
 const Card = styled.article`
   margin-top: 2.5rem;
@@ -38,17 +38,18 @@ const Meta = styled.div`
   }
 `
 
-const PostCard = ({ post }) => {
-  const { title, date, author, slug } = post.frontmatter
-
-  const img = post.frontmatter.image.childImageSharp.gatsbyImageData
+const PostCard = ({ post, postLink }) => {
+  // const { title, date, author, slug } = post.frontmatter
+  // const img = post.frontmatter.image.childImageSharp.gatsbyImageData
+  const { name, webContentLink } = post
 
   return (
     <Card>
       <Anim>
-        <Link to={slug}>
-          <GatsbyImage image={img} alt={title} className="card-image" />
-          <h2>{title}</h2>
+        <Link to={postLink}>
+          <img src={webContentLink} alt={name} className="card-image" />
+          {/* <GatsbyImage image={img} alt={title} className="card-image" /> */}
+          <h2>{name}</h2>
           {/* <p>{post.excerpt}</p> */}
           {/* <Meta>
             <h4>Written by {author}</h4>
