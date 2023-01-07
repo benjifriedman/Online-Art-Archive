@@ -27,21 +27,21 @@ const renderDriveAsset = (edge, children) => {
 
   return (
     <div key={id}>
-      <hr style={{ marginTop: 0 }} className="separator separator__large" />
+      {/* <hr style={{ marginTop: 0 }} className="separator separator__large" />
       <Link className="btn" to="/">
         Back to all posts
       </Link>
       <hr className="separator" />
-      <h1>{name}</h1>
+      <h1>{name}</h1> */}
 
       <img className="gatsby-resp-image-img" src={webContentLink} alt={name} />
 
-      <div className="post__body">{children}</div>
+      {/* <div className="post__body">{children}</div>
       <hr className="separator" />
       <h2>
         Posted on <span>{date}</span>
       </h2>
-      <hr className="separator separator__large" />
+      <hr className="separator separator__large" /> */}
     </div>
   )
 }
