@@ -2,8 +2,8 @@ import React from 'react'
 import SeriesList from '../components/SeriesList'
 import PostList from '../components/PostList'
 import Layout from '../components/layout'
-import { graphql, Link } from 'gatsby'
-import SEO from '../components/Seo'
+import { graphql } from 'gatsby'
+import Seo from '../components/Seo'
 
 const Index = ({ data }) => {
   const response = data
@@ -29,7 +29,7 @@ export default Index
 export const Head = ({ data }) => {
   const { title, image } = data.site.siteMetadata
 
-  return <SEO title={title} image={image} />
+  return <Seo title={title} image={image} />
 }
 
 export const query = graphql`
@@ -57,7 +57,7 @@ export const query = graphql`
         }
       }
     }
-    allDriveFileNode(limit: 10) {
+    allDriveFileNode(limit: 4) {
       edges {
         node {
           name
