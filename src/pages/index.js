@@ -18,7 +18,7 @@ const Index = ({ data }) => {
       {/* <h2>
         <Link to="/oar">Oar</Link>
       </h2> */}
-      <SeriesList posts={series} singleFilePages={singleFilePages} />
+      <SeriesList series={series} />
       <PostList posts={posts} singleFilePages={singleFilePages} />
     </Layout>
   )
@@ -34,7 +34,7 @@ export const Head = ({ data }) => {
 
 export const query = graphql`
   query {
-    allMdx(sort: { frontmatter: { date: DESC } }) {
+    allMdx(sort: { frontmatter: { date: DESC } }, limit: 10) {
       totalCount
       edges {
         node {
@@ -57,7 +57,7 @@ export const query = graphql`
         }
       }
     }
-    allDriveFileNode {
+    allDriveFileNode(limit: 10) {
       edges {
         node {
           name

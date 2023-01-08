@@ -19,6 +19,7 @@ const PostTemplateStyles = styled.section`
   }
   .gatsby-resp-image-img {
     width: 100%;
+    margin-bottom: 20px;
   }
 `
 
@@ -50,6 +51,7 @@ const renderDriveAssets = (edges, children, singleFilePages, title) => {
               className="gatsby-resp-image-img"
               src={webContentLink}
               alt={name}
+              loading="lazy"
             />
 
             {/* <div className="post__body">{children}</div>

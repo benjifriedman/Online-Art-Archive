@@ -11,14 +11,15 @@ const Footer = () => {
     twitterUsername,
     facebookName,
     instagramName,
-    linkedinName,
+    elloName,
     siteAuthor,
     siteAuthorUrl,
   } = useSiteMetadata()
   return (
     <FooterStyles>
       <h2 style={{ marginTop: "0px" }} className="title__main">
-        <Link to="/">{title}</Link>
+        {/* <Link to="/">{title}</Link> */}
+        <Link to="/">Home</Link>
       </h2>
       <div className="container">
         <ul>
@@ -40,19 +41,19 @@ const Footer = () => {
           </li>
 
           <li>
-            <a href={linkedinName} target="_blank" rel="noreferrer nofollow">
-              LinkedIn
+            <a href={elloName} target="_blank" rel="noreferrer nofollow">
+              Ello
             </a>
           </li>
         </ul>
       </div>
-      <div className="container">
+      {/* <div className="container">
         Koop - &copy; {year} Designed and built by{" "}
         <a href={siteAuthorUrl} target="_blank" rel="noopener noreferrer">
           {siteAuthor}
         </a>{" "}
         | <Link to="/privacy">Privacy Statement</Link>
-      </div>
+      </div> */}
     </FooterStyles>
   )
 }

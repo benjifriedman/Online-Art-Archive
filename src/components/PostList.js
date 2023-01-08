@@ -4,10 +4,10 @@ import styled from 'styled-components'
 import Anim from './Anim'
 
 const List = styled.div`
-  @media (min-width: 600px) {
+   {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
   }
 `
 
