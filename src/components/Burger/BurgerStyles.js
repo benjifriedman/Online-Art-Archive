@@ -1,8 +1,8 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const BurgerStyles = styled.button`
   position: fixed;
-  top: 2.5rem;
+  top: 1.5rem;
   right: 2.5rem;
   display: flex;
   flex-direction: column;
@@ -26,22 +26,22 @@ export const BurgerStyles = styled.button`
   div {
     width: 2rem;
     height: 2px;
-    background: ${({ open }) => (open ? "#fff" : "#2b2b2b")};
+    background: ${({ open }) => (open ? '#fff' : '#2b2b2b')};
     transition: all 0.3s;
     position: relative;
     transform-origin: 1px;
 
     &:first-child {
-      transform: ${({ open }) => (open ? "rotate(45deg)" : "rotate(0)")};
+      transform: ${({ open }) => (open ? 'rotate(45deg)' : 'rotate(0)')};
     }
 
     &:nth-child(2) {
       opacity: ${({ open }) => (open ? 0 : 1)};
-      transform: ${({ open }) => (open ? "translate(20px)" : "translate(0)")};
+      transform: ${({ open }) => (open ? 'translate(20px)' : 'translate(0)')};
     }
 
     &:nth-child(3) {
-      transform: ${({ open }) => (open ? "rotate(-45deg)" : "rotate(0)")};
+      transform: ${({ open }) => (open ? 'rotate(-45deg)' : 'rotate(0)')};
     }
   }
 `

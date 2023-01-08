@@ -14,6 +14,7 @@
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
   },
   "dependencies": {
+    "@fontsource/rubik": "^4.5.13",
     "@mdx-js/mdx": "^2.2.1",
     "@mdx-js/react": "^2.2.1",
     "axios": "^1.2.2",
@@ -39,6 +40,7 @@
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
     "react-intersection-observer": "^9.4.1",
+    "source-code-pro": "^2.38.0",
     "styled-components": "^5.3.6",
     "typeface-heebo": "^1.1.13"
   },

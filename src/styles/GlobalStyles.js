@@ -5,6 +5,7 @@ const GlobalStyles = createGlobalStyle`
 :root {
   font-size: 16px;
   --dark: #2b2b2b;
+  --dark: #000;
   --grey: #7c7c7c;
   --highlight: #0075FF;
 }
@@ -22,11 +23,11 @@ ol {
 
 body {
   color: var(--dark);
-  font-family: Heebo, Arial, Helvetica, 'Helvetica Neue', sans-serif;
+  font-family: rubik, Arial, Helvetica, 'Helvetica Neue', sans-serif;
   padding: 2rem 1.5rem;
   margin: 0;
-  padding: 150px 0 0 0;
-  font-size: 1.2rem;
+  padding: 100px 0 0 0;
+  font-size: 1rem;
   line-height: 1.4;
 
   &::-webkit-scrollbar {

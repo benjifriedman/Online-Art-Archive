@@ -5,8 +5,8 @@ import styled from 'styled-components'
 import Anim from './Anim'
 
 const Card = styled.article`
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 
   // &:hover {
   //   .card-image {
@@ -49,7 +49,7 @@ const PostCard = ({ post, postLink }) => {
         <Link to={postLink}>
           <img src={webContentLink} alt={name} className="card-image" />
           {/* <GatsbyImage image={img} alt={title} className="card-image" /> */}
-          <h2>{name}</h2>
+          {/* <h2>{name}</h2> */}
           {/* <p>{post.excerpt}</p> */}
           {/* <Meta>
             <h4>Written by {author}</h4>

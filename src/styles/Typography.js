@@ -1,11 +1,12 @@
-import { createGlobalStyle } from "styled-components"
-import "typeface-heebo"
+import { createGlobalStyle } from 'styled-components'
+// import "typeface-heebo"
+import '@fontsource/rubik'
 
 const Typography = createGlobalStyle`
     h1,
     .title__main {
-    font-size: 3.5rem;
-    font-weight: 700;
+    font-size: 1rem;
+    font-weight: 500;
     color: var(--dark);
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;

@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react"
-import { Link } from "gatsby"
-import Nav from "../Nav/Nav"
-import { HeaderStyles } from "./HeaderStyles"
+import React, { useState, useEffect } from 'react'
+import { Link } from 'gatsby'
+import Nav from '../Nav/Nav'
+import { HeaderStyles } from './HeaderStyles'
 
 const Header = () => {
   const [scroll, setScroll] = useState(false)
 
   useEffect(() => {
-    window.addEventListener("scroll", () => {
+    window.addEventListener('scroll', () => {
       setScroll(window.scrollY > 50)
     })
   }, [])
 
   return (
     <>
-      <HeaderStyles className={scroll ? "nav__scrolled" : null}>
+      <HeaderStyles className={scroll ? 'nav__scrolled' : null}>
         <h1>
-          <Link to="/">Benji Online Art Archive</Link>
+          <Link to="/">Benji Friedman Art Archive</Link>
         </h1>
         <Nav />
       </HeaderStyles>

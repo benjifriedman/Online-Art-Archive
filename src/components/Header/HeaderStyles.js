@@ -1,7 +1,7 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const HeaderStyles = styled.header`
-  padding: 10px 20px;
+  padding: 0px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -18,6 +18,7 @@ export const HeaderStyles = styled.header`
   }
 
   h1 {
+    font-size: 2rem;
     a {
       color: var(--dark);
       text-decoration: none;

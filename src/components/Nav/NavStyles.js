@@ -1,4 +1,4 @@
-import styled from "styled-components"
+import styled from 'styled-components'
 
 export const NavStyles = styled.nav`
   display: none;
@@ -9,8 +9,8 @@ export const NavStyles = styled.nav`
 
     li {
       padding: 0.5rem 1rem;
-      font-weight: 700;
-      font-size: 1.25rem;
+      font-weight: 500;
+      font-size: 1rem;
 
       a {
         color: var(--dark);

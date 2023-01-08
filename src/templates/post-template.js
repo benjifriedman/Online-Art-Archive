@@ -14,7 +14,7 @@ const PostTemplateStyles = styled.section`
   }
 
   .post__body {
-    margin-top: 2.5rem;
+    margin-top: 1.5rem;
     margin-bottom: 2.5rem;
   }
   .gatsby-resp-image-img {
