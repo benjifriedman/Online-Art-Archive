@@ -5,6 +5,7 @@ const {
 const { loadDrive, getFolder, getFiles, getAuth } = require('./google-drive')
 const path = require(`path`)
 const crypto = require(`crypto`)
+const createPaginatedPages = require('gatsby-paginate')
 
 // constants for your GraphQL Post and Author types
 const POST_NODE_TYPE = `DriveNode`
@@ -208,8 +209,24 @@ exports.createPages = async ({ actions, graphql }) => {
 
   const driveData = { driveFolders, driveFiles }
 
-  createDrivePages(driveData, createPage, singleFilePages)
-  createMDXPages(posts, createPage)
+  createDrivePages(
+    driveData,
+    (page) => {
+      createPaginatedPages({
+        edges: driveFiles,
+        createPage: createPage,
+        pageTemplate: './src/templates/index.js',
+        pageLength: 1,
+        pathPrefix: '',
+        context: {},
+      })
+      createPage(page)
+    },
+    singleFilePages
+  )
+  createMDXPages(posts, (page) => {
+    createPage(page)
+  })
 }
 
 function createMDXPages(mdxNodes, cb) {

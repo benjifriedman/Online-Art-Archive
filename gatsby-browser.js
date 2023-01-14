@@ -1,5 +1,7 @@
-import React from "react"
-import { AnimatePresence } from "framer-motion"
+import React from 'react'
+import { AnimatePresence } from 'framer-motion'
+import 'bootstrap/dist/css/bootstrap.min.css'
+import '@fontsource/rubik'
 
 // export function wrapPageElement({ element }) {
 //   return <AnimatePresence mode="wait">{element}</AnimatePresence>
@@ -14,7 +16,7 @@ export const shouldUpdateScroll = ({
   const TRANSITION_DELAY = 0.5 * 1000 * 2
 
   // if its a normal route
-  if (location.action === "PUSH") {
+  if (location.action === 'PUSH') {
     window.setTimeout(() => window.scrollTo(0, 0), TRANSITION_DELAY)
   }
 

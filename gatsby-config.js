@@ -21,7 +21,7 @@ module.exports = {
     facebookName: `https://www.facebook.com/benjifriedman.art`,
     instagramName: `https://www.instagram.com/benjifriedman`,
     elloName: `https://www.ello.co/benjifriedman`,
-    singleFilePages: false,
+    singleFilePages: true,
     lang: 'en',
   },
   plugins: [

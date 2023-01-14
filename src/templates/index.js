@@ -5,8 +5,9 @@ import Layout from '../components/layout'
 import { graphql } from 'gatsby'
 import Seo from '../components/Seo'
 
-const Index = ({ data }) => {
+const Index = ({ data, pageContext }) => {
   const response = data
+  const { group } = pageContext
 
   // const posts = response?.allMdx?.edges
   const series = response?.allDriveFolderNode?.edges
@@ -15,20 +16,19 @@ const Index = ({ data }) => {
 
   return (
     <Layout>
-      {/* <h2>
-        <Link to="/oar">Oar</Link>
-      </h2> */}
       <SeriesList series={series} />
-      <PostList posts={posts} singleFilePages={singleFilePages} />
+      <PostList
+        posts={group}
+        pagination={pageContext}
+        singleFilePages={singleFilePages}
+      />
     </Layout>
   )
 }
 
 export default Index
-
 export const Head = ({ data }) => {
   const { title, image } = data.site.siteMetadata
-
   return <Seo title={title} image={image} />
 }
 

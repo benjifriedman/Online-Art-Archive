@@ -2,6 +2,9 @@ import React from 'react'
 import PostCard from './PostCard'
 import styled from 'styled-components'
 import Anim from './Anim'
+import { Link, navigate } from 'gatsby'
+import { removeFileExt } from '../helpers'
+import Pagination from 'react-bootstrap/Pagination'
 
 const List = styled.div`
    {
@@ -10,21 +13,32 @@ const List = styled.div`
     justify-content: center;
   }
 `
+const PostList = ({ posts, pagination, singleFilePages }) => {
+  const { group, index, pageCount } = pagination
+  const previousUrl = index - 1 === 0 ? '/' : (index - 1).toString()
+  const nextUrl = (index + 1).toString()
 
-const removeFileExt = (name) => {
-  // rename name without file extension
-  if (name.includes('.png')) {
-    name = name.split('.png')[0]
-  } else if (name.includes('.jpg')) {
-    name = name.split('.jpg')[0]
-  } else if ((name = name.split('.jpeg')[0])) {
-    name = name.split('.jpeg')[0]
+  // build pages index
+  const pages = []
+  const addedEllipsis = false
+  for (let p = 1; p < pageCount + 1; p++) {
+    if (p > 5 && p < pageCount - 1) {
+      !addedEllipsis && pages.push(<Pagination.Ellipsis />)
+      addedEllipsis = true
+    } else {
+      pages.push(
+        <Pagination.Item
+          key={p}
+          className="blogListing"
+          active={index === p}
+          href={p === 1 ? '/' : `/${p.toString()}`}
+        >
+          {p}
+        </Pagination.Item>
+      )
+    }
   }
 
-  return name
-}
-
-const PostList = ({ posts, singleFilePages }) => {
   return (
     <>
       <section>
@@ -33,13 +47,26 @@ const PostList = ({ posts, singleFilePages }) => {
         </Anim> */}
 
         <List>
-          {posts.map(({ node }, index) => {
+          {posts.map(({ node }, i) => {
             const postLink = singleFilePages
               ? `${node.fields.slug}/${removeFileExt(node.name)}`
               : node.fields.slug
-            return <PostCard key={index} post={node} postLink={postLink} />
+            return <PostCard key={i} post={node} postLink={postLink} />
           })}
         </List>
+        <Pagination size="sm" className="col-md-5 mx-auto mt-3">
+          {index === 1 ? (
+            ''
+          ) : (
+            <Pagination.Prev href={index === 2 ? `/` : `/${previousUrl}`} />
+          )}
+          {pages}
+          {group[index - 1] ? (
+            <Pagination.Next onClick={() => navigate(`/${nextUrl}`)} />
+          ) : (
+            ''
+          )}
+        </Pagination>
       </section>
     </>
   )

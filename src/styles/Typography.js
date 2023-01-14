@@ -1,6 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
 // import "typeface-heebo"
-import '@fontsource/rubik'
 
 const Typography = createGlobalStyle`
     h1,
