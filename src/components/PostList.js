@@ -20,10 +20,11 @@ const PostList = ({ posts, pagination, singleFilePages }) => {
 
   // build pages index
   const pages = []
-  const addedEllipsis = false
+  let addedEllipsis = false
   for (let p = 1; p < pageCount + 1; p++) {
     if (p > 5 && p < pageCount - 1) {
-      !addedEllipsis && pages.push(<Pagination.Ellipsis />)
+      !addedEllipsis &&
+        pages.push(<Pagination.Ellipsis key={p} href={`/${p.toString()}`} />)
       addedEllipsis = true
     } else {
       pages.push(
@@ -49,8 +50,8 @@ const PostList = ({ posts, pagination, singleFilePages }) => {
         <List>
           {posts.map(({ node }, i) => {
             const postLink = singleFilePages
-              ? `${node.fields.slug}/${removeFileExt(node.name)}`
-              : node.fields.slug
+              ? `/${node.fields.slug}/${removeFileExt(node.name)}`
+              : `${node.fields.slug}`
             return <PostCard key={i} post={node} postLink={postLink} />
           })}
         </List>

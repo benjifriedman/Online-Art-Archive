@@ -1,13 +1,20 @@
 import React from 'react'
-import {Link} from 'gatsby'
+import { Link } from 'gatsby'
 import styled from 'styled-components'
 import Anim from './Anim'
 
 const List = styled.div`
- {
+   {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
+  }
+`
+
+const ListItem = styled.div`
+   {
+    list-style: none;
+    margin-right: 1rem;
   }
 `
 
@@ -15,11 +22,14 @@ const SeriesList = ({ series }) => {
   return (
     <>
       <section>
-
         <List>
-          {series.map(({ node }, index) => {
-            // return <li key={index} post={name}><Link to={slug}>{node}</Link></li>
-            <li key={index}>{node.name}</li>
+          {series.map(({ node }, i) => {
+            const { name, slug } = node
+            return (
+              <ListItem key={i} post={name}>
+                <Link to={slug}>{name}</Link>
+              </ListItem>
+            )
           })}
         </List>
       </section>
