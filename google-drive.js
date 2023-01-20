@@ -1,6 +1,7 @@
 const path = require('path')
 const { google } = require('googleapis')
 const axios = require('axios')
+const fs = require('fs')
 
 // Get auth token
 const getAuth = ({ email, key }) => {
@@ -46,8 +47,39 @@ const getFolder = async (drive, folderId) => {
   }
 }
 
+const getFile = async (drive, fileId, dest) => {
+  try {
+    const res = await drive.files.get(
+      {
+        fileId,
+        alt: 'media',
+      },
+      { responseType: 'stream' }
+    )
+    if (dest) {
+      // write the file
+      const stream = fs.createWriteStream(dest)
+      return new Promise((resolve, reject) => {
+        res.data
+          .on('end', () => {
+            resolve(res)
+          })
+          .on('error', (err) => {
+            reject(err)
+          })
+          .pipe(stream)
+      })
+    } else {
+      return res
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
 module.exports = {
   getAuth,
   getFolder,
+  getFile,
   loadDrive,
 }

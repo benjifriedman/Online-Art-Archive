@@ -23,20 +23,31 @@ const PostTemplateStyles = styled.section`
   }
 `
 
-const renderDriveAssets = (edges, children, singleFilePages, title) => {
-  let driveAssets = edges
+const renderDriveAssets = (data, children, singleFilePages, title) => {
+  let driveAssets = data.allDriveFileNode.edges
   if (singleFilePages) {
-    driveAssets = edges.filter((edge) => edge.node.name === title)
+    driveAssets = data.allDriveFileNode?.edges.filter(
+      (edge) => edge.node.name === title
+    )
   }
 
   return (
     <>
-      {driveAssets.map((edge) => {
-        const { name, webContentLink, createdTime, id } = edge.node
-        const date = new Date(createdTime).toDateString()
+      {driveAssets.map((edge, i) => {
+        let imgSrc, altName
+        if (edge.node.name.includes('.heic')) {
+          const { name, publicURL } = data.allFile.edges[0].node
+          altName = name
+          imgSrc = publicURL
+        } else {
+          const { name, webContentLink, createdTime, id } = edge.node
+          const date = new Date(createdTime).toDateString()
+          altName = name
+          imgSrc = webContentLink
+        }
 
         return (
-          <div key={id}>
+          <div key={i}>
             {/* <hr
               style={{ marginTop: 0 }}
               className="separator separator__large"
@@ -49,8 +60,8 @@ const renderDriveAssets = (edges, children, singleFilePages, title) => {
 
             <img
               className="gatsby-resp-image-img"
-              src={webContentLink}
-              alt={name}
+              src={imgSrc}
+              alt={altName}
               loading="lazy"
             />
 
@@ -101,21 +112,19 @@ const PostTemplate = ({ pageContext, data, children }) => {
     },
   } = data
   const { title } = pageContext
+  let content = ''
+
+  if (data?.allDriveFileNode?.edges.length > 0) {
+    content = renderDriveAssets(data, children, singleFilePages, title)
+  } else if (data?.mdx?.frontmatter) {
+    content = renderFullPost(data.mdx.frontmatter, children)
+  } else {
+    navigate('/')
+  }
+
   return (
     <Layout>
-      <PostTemplateStyles>
-        {data?.mdx?.frontmatter
-          ? renderFullPost(data.mdx.frontmatter, children)
-          : ''}
-        {data?.allDriveFileNode?.edges.length > 0
-          ? renderDriveAssets(
-              data?.allDriveFileNode?.edges,
-              children,
-              singleFilePages,
-              title
-            )
-          : !data?.mdx?.frontmatter && navigate('/')}
-      </PostTemplateStyles>
+      <PostTemplateStyles>{content}</PostTemplateStyles>
     </Layout>
   )
 }
@@ -151,6 +160,15 @@ export const query = graphql`
     site {
       siteMetadata {
         singleFilePages
+      }
+    }
+    allFile(filter: { relativePath: { regex: "/heic/" } }) {
+      edges {
+        node {
+          name
+          relativePath
+          publicURL
+        }
       }
     }
   }

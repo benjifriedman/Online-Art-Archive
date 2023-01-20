@@ -2,10 +2,18 @@ const {
   createFilePath,
   createRemoteFileNode,
 } = require('gatsby-source-filesystem')
-const { loadDrive, getFolder, getFiles, getAuth } = require('./google-drive')
+const {
+  loadDrive,
+  getFolder,
+  getFiles,
+  getAuth,
+  getFile,
+} = require('./google-drive')
 const path = require(`path`)
 const crypto = require(`crypto`)
 const createPaginatedPages = require('gatsby-paginate')
+const heicConvert = require('heic-convert')
+const { writeFile } = require('node:fs/promises')
 
 // constants for your GraphQL Post and Author types
 const POST_NODE_TYPE = `DriveNode`
@@ -29,6 +37,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       url: String!
       createdTime: Date!
       webContentLink: String!
+      mdFileData: String!
       fields: Field!
     }
     type Field {
@@ -73,7 +82,7 @@ exports.sourceNodes = async (
   )
 }
 
-function createFileNode({ createNode, createNodeId, file, parentId }) {
+function createFileNode({ createNode, createNodeId, file, parentId, data }) {
   // create node for the file
   const fileId = createNodeId(`drive-file-${file.id}`)
   const fileContent = JSON.stringify(file)
@@ -90,6 +99,7 @@ function createFileNode({ createNode, createNodeId, file, parentId }) {
     children: [],
     url: webContentLink,
     createdTime,
+    mdFileData: data,
     internal: {
       type: `DriveFileNode`,
       mediaType: file.mimeType,
@@ -270,20 +280,26 @@ function createDrivePages(driveData, cb, singleFilePages) {
         name,
         fields: { slug },
       } = node
-      let imagePath = name
+      let filePath = name
 
       // rename name without file extension
-      name.includes('.png') ? (imagePath = name.split('.png')[0]) : ''
-      name.includes('.jpg') ? (imagePath = name.split('.jpg')[0]) : ''
-      name.includes('.jpeg') ? (imagePath = name.split('.jpeg')[0]) : ''
+      name.includes('.png') ? (filePath = name.split('.png')[0]) : ''
+      name.includes('.jpg') ? (filePath = name.split('.jpg')[0]) : ''
+      name.includes('.jpeg') ? (filePath = name.split('.jpeg')[0]) : ''
+      name.includes('.heic') ? (filePath = name.split('.heic')[0]) : ''
+
+      // check for .md files
+      if (name.includes('.md')) {
+        filePath = name.split('.md')[0]
+      }
 
       const page = {
-        path: `${slug}/${imagePath}`,
+        path: `${slug}/${filePath}`,
         component: require.resolve('./src/templates/post-template.js'),
         context: {
           title: name,
           slug,
-          filePath: `${slug}/${imagePath}`,
+          filePath: `${slug}/${filePath}`,
         },
       }
       cb(page)
@@ -336,13 +352,56 @@ const recursiveFoldersAndFiles = async (
     } else if (
       file.mimeType === 'image/png' ||
       file.mimeType === 'image/jpeg' ||
-      file.mimeType === 'image/jpg'
+      file.mimeType === 'image/jpg' ||
+      file.mimeType === 'text/markdown'
     ) {
       // if it's a file, create a path referencing the parent folder
       const filePath = parent === '' ? file.name : `${parent}/${file.name}`
 
-      // create image nodes
-      createFileNode({ createNode, createNodeId, file, parentId })
+      if (file.name.includes('.heic')) {
+        const res = await getFile(
+          drive,
+          file.id,
+          `${__dirname}/src/images/${file.name}.png`
+        )
+      }
+
+      if (file.mimeType === 'text/markdown') {
+        try {
+          const { data } = await getFile(drive, file.id)
+          // create file nodes
+          createFileNode({
+            createNode,
+            createNodeId,
+            file,
+            parentId,
+            data,
+          })
+        } catch (e) {
+          console.log(e)
+        }
+      } else {
+        // create file nodes
+        createFileNode({
+          createNode,
+          createNodeId,
+          file,
+          parentId,
+          data: '',
+        })
+      }
     }
   }
 }
+
+// async function convertHEICToPNG(HEICBuffer, dest) {
+//   try {
+//     const outputBuffer = await heicConvert({
+//       buffer: HEICBuffer,
+//       format: 'PNG',
+//     })
+//     await writeFile(`${dest}`, outputBuffer)
+//   } catch (e) {
+//     console.log(e)
+//   }
+// }

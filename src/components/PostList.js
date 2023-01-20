@@ -13,7 +13,7 @@ const List = styled.div`
     justify-content: center;
   }
 `
-const PostList = ({ posts, pagination, singleFilePages }) => {
+const PostList = ({ posts, images, pagination, singleFilePages }) => {
   const { group, index, pageCount } = pagination
   const previousUrl = index - 1 === 0 ? '/' : (index - 1).toString()
   const nextUrl = (index + 1).toString()
@@ -52,7 +52,24 @@ const PostList = ({ posts, pagination, singleFilePages }) => {
             const postLink = singleFilePages
               ? `/${node.fields.slug}/${removeFileExt(node.name)}`
               : `${node.fields.slug}`
-            return <PostCard key={i} post={node} postLink={postLink} />
+
+            if (node.name.includes('heic')) {
+              const HEICNode = images.filter((img) => {
+                return img.node.relativePath.includes(node.name)
+              })
+              if (HEICNode.length) {
+                const { name, publicURL } = HEICNode[0].node
+                return (
+                  <PostCard
+                    key={i}
+                    post={{ name, webContentLink: publicURL }}
+                    postLink={postLink}
+                  />
+                )
+              }
+            } else {
+              return <PostCard key={i} post={node} postLink={postLink} />
+            }
           })}
         </List>
         <Pagination size="sm" className="col-md-5 mx-auto mt-3">
