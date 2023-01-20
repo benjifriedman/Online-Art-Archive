@@ -35,6 +35,8 @@
     "gatsby-source-filesystem": "^5.4.0",
     "gatsby-transformer-sharp": "^5.4.0",
     "googleapis": "^110.0.0",
+    "heic-convert": "^1.2.4",
+    "markdown-it": "^13.0.1",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",

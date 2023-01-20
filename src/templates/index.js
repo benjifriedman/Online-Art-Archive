@@ -4,21 +4,38 @@ import PostList from '../components/PostList'
 import Layout from '../components/layout'
 import { graphql } from 'gatsby'
 import Seo from '../components/Seo'
+import MarkdownIt from 'markdown-it'
 
 const Index = ({ data, pageContext }) => {
   const response = data
   const { group } = pageContext
 
+  // markdown parser
+  const md = new MarkdownIt()
+
   // const posts = response?.allMdx?.edges
   const series = response?.allDriveFolderNode?.edges
   const posts = response?.allDriveFileNode?.edges
+  const images = response?.allFile?.edges
   const singleFilePages = response.site?.siteMetadata?.singleFilePages
+  const mdFiles = posts.filter((post) => {
+    return post.node.mdFileData !== ''
+  })
 
   return (
     <Layout>
       <SeriesList series={series} />
+      <div>
+        <ul>
+          {mdFiles.map((mdFile, i) => {
+            const html = md.render(mdFile.node.mdFileData)
+            return <li key={i} dangerouslySetInnerHTML={{ __html: html }}></li>
+          })}
+        </ul>
+      </div>
       <PostList
         posts={group}
+        images={images}
         pagination={pageContext}
         singleFilePages={singleFilePages}
       />
@@ -32,6 +49,7 @@ export const Head = ({ data }) => {
   return <Seo title={title} image={image} />
 }
 
+// https://www.gatsbyjs.com/docs/graphql-reference/#complete-list-of-possible-operators
 export const query = graphql`
   query {
     allMdx(sort: { frontmatter: { date: DESC } }, limit: 10) {
@@ -65,6 +83,7 @@ export const query = graphql`
             slug
           }
           webContentLink
+          mdFileData
         }
       }
     }
@@ -81,6 +100,15 @@ export const query = graphql`
         title
         image
         singleFilePages
+      }
+    }
+    allFile(filter: { relativePath: { regex: "/heic/" } }) {
+      edges {
+        node {
+          name
+          relativePath
+          publicURL
+        }
       }
     }
   }
