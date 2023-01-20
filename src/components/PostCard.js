@@ -19,7 +19,7 @@ const Card = styled.article`
     color: var(--dark);
   }
   .card-image {
-    height: 250px;
+    height: 500px;
     transition: transform 0.15s;
     margin-bottom: 15px;
   }
@@ -45,10 +45,15 @@ const PostCard = ({ post, postLink }) => {
   const { name, webContentLink } = post
 
   return (
-    <Card style={{marginBottom: "0px", padding: 10}}>
+    <Card style={{ marginBottom: '0px', padding: 10 }}>
       <Anim>
         <Link to={postLink}>
-          <img src={webContentLink} alt={name} loading="lazy" className="card-image" />
+          <img
+            src={webContentLink}
+            alt={name}
+            loading="lazy"
+            className="card-image"
+          />
           {/* <GatsbyImage image={img} alt={title} className="card-image" /> */}
           {/* <h2>{name}</h2> */}
           {/* <p>{post.excerpt}</p> */}

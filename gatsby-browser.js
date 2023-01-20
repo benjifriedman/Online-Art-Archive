@@ -13,7 +13,8 @@ export const shouldUpdateScroll = ({
 }) => {
   // transition duration from layout.js * 1000 to get time in ms
   // * 2 for exit and enter transition
-  const TRANSITION_DELAY = 0.5 * 1000 * 2
+  // const TRANSITION_DELAY = 0.5 * 1000 * 2
+  const TRANSITION_DELAY = 0
 
   // if its a normal route
   if (location.action === 'PUSH') {

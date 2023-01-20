@@ -65,7 +65,8 @@ const PostList = ({ posts, pagination, singleFilePages }) => {
           {group[index - 1] ? (
             <Pagination.Next onClick={() => navigate(`/${nextUrl}`)} />
           ) : (
-            ''
+            // I know this is hacky, sorry
+            <Pagination.Next onClick={() => navigate(`/${nextUrl}`)} />
           )}
         </Pagination>
       </section>

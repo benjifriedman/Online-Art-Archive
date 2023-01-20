@@ -4,12 +4,12 @@ import { createGlobalStyle } from 'styled-components'
 const Typography = createGlobalStyle`
     h1,
     .title__main {
-    font-size: 1rem;
+    font-size: 2rem;
     font-weight: 500;
     color: var(--dark);
     margin-top: 1.25rem;
     margin-bottom: 1.25rem;
-    letter-spacing: -2px;
+    letter-spacing: .1px;
     line-height: 1.1em;
 
     // &:after {

@@ -9,6 +9,7 @@ const ContactPage = () => {
       <Layout>
         <h1>Get in touch</h1>
         <p>Contact page</p>
+        <p>There might be information here in the future</p>
       </Layout>
     </>
   )

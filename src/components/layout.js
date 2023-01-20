@@ -1,14 +1,14 @@
-import React, { useState } from "react"
-import { Link } from "gatsby"
-import Seo from "../components/Seo"
-import Footer from "./Footer/Footer"
-import { motion } from "framer-motion"
+import React, { useState } from 'react'
+import { Link } from 'gatsby'
+import Seo from '../components/Seo'
+import Footer from './Footer/Footer'
+import { motion } from 'framer-motion'
 // import CookieConsent from "react-cookie-consent"
-import Header from "./Header/Header"
-import Burger from "./Burger/Burger"
-import SideMenu from "./SideMenu/SideMenu"
-import GlobalStyles from "../styles/GlobalStyles"
-import Typography from "../styles/Typography"
+import Header from './Header/Header'
+import Burger from './Burger/Burger'
+import SideMenu from './SideMenu/SideMenu'
+import GlobalStyles from '../styles/GlobalStyles'
+import Typography from '../styles/Typography'
 
 const Layout = ({ children }) => {
   const [open, setOpen] = useState(false)
@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
         <Header />
         <Burger open={open} setOpen={setOpen} />
         <SideMenu open={open} setOpen={setOpen} />
-        <main style={{ minHeight: "100vh", paddingTop: 0 }}>{children}</main>
+        <main style={{ minHeight: '50vh', paddingTop: 0 }}>{children}</main>
         <Footer />
         {/* <CookieConsent
           location="bottom"
