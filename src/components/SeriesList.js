@@ -27,7 +27,7 @@ const SeriesList = ({ series }) => {
             const { name, slug } = node
             return (
               <ListItem key={i} post={name}>
-                <Link to={slug}>{name}</Link>
+                <Link to={`/${slug}`}>{name}</Link>
               </ListItem>
             )
           })}
