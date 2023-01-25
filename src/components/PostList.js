@@ -22,9 +22,9 @@ const PostList = ({ posts, images, pagination, singleFilePages }) => {
   const pages = []
   let addedEllipsis = false
   for (let p = 1; p < pageCount + 1; p++) {
-    if (p > 5 && p < pageCount - 1) {
-      !addedEllipsis &&
-        pages.push(<Pagination.Ellipsis key={p} href={`/${p.toString()}`} />)
+    let offset = index + 5
+    if (p > offset && p < pageCount && !addedEllipsis) {
+      pages.push(<Pagination.Ellipsis key={p} href={`/${p.toString()}`} />)
       addedEllipsis = true
     } else {
       pages.push(
@@ -79,10 +79,9 @@ const PostList = ({ posts, images, pagination, singleFilePages }) => {
             <Pagination.Prev href={index === 2 ? `/` : `/${previousUrl}`} />
           )}
           {pages}
-          {group[index - 1] ? (
-            <Pagination.Next onClick={() => navigate(`/${nextUrl}`)} />
+          {index === pages.length ? (
+            ''
           ) : (
-            // I know this is hacky, sorry
             <Pagination.Next onClick={() => navigate(`/${nextUrl}`)} />
           )}
         </Pagination>

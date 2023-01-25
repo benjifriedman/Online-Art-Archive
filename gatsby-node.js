@@ -37,7 +37,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       url: String!
       createdTime: Date!
       webContentLink: String!
-      mdFileData: String!
+      mdFileData: String
       fields: Field!
     }
     type Field {
@@ -167,6 +167,45 @@ exports.onCreateNode = ({
   }
 }
 
+const pagesQuery = `
+{
+  site {
+    siteMetadata {
+      singleFilePages
+    }
+  }
+  allMdx {
+    edges {
+      node {
+        frontmatter {
+          title
+          slug
+        }
+      }
+    }
+  }
+  allDriveFolderNode {
+    edges {
+      node {
+        name
+        slug
+      }
+    }
+  }
+  allDriveFileNode {
+    edges {
+      node {
+        name
+        fields {
+          slug
+        }
+        webContentLink
+      }
+    }
+  }
+}
+`
+
 exports.createPages = async ({ actions, graphql }) => {
   const { createPage } = actions
 
@@ -179,68 +218,15 @@ exports.createPages = async ({ actions, graphql }) => {
         siteMetadata: { singleFilePages },
       },
     },
-  } = await graphql(`
-    {
-      site {
-        siteMetadata {
-          singleFilePages
-        }
-      }
-      allMdx {
-        edges {
-          node {
-            frontmatter {
-              title
-              slug
-            }
-          }
-        }
-      }
-      allDriveFolderNode {
-        edges {
-          node {
-            name
-            slug
-          }
-        }
-      }
-      allDriveFileNode {
-        edges {
-          node {
-            name
-            fields {
-              slug
-            }
-            webContentLink
-          }
-        }
-      }
-    }
-  `)
+  } = await graphql(pagesQuery)
 
   const driveData = { driveFolders, driveFiles }
 
-  createDrivePages(
-    driveData,
-    (page) => {
-      createPaginatedPages({
-        edges: driveFiles,
-        createPage: createPage,
-        pageTemplate: './src/templates/index.js',
-        pageLength: 1,
-        pathPrefix: '',
-        context: {},
-      })
-      createPage(page)
-    },
-    singleFilePages
-  )
-  createMDXPages(posts, (page) => {
-    createPage(page)
-  })
+  createDrivePages(driveData, createPage, singleFilePages)
+  createMDXPages(posts, createPage)
 }
 
-function createMDXPages(mdxNodes, cb) {
+function createMDXPages(mdxNodes, createPage) {
   mdxNodes.forEach(({ node }) => {
     const { slug, title } = node.frontmatter
     if (!title) return
@@ -254,12 +240,21 @@ function createMDXPages(mdxNodes, cb) {
       },
     }
 
-    cb(page)
+    createPage(page)
   })
 }
 
-function createDrivePages(driveData, cb, singleFilePages) {
+function createDrivePages(driveData, createPage, singleFilePages) {
   const { driveFolders, driveFiles } = driveData
+
+  createPaginatedPages({
+    edges: driveFiles,
+    createPage: createPage,
+    pageTemplate: './src/templates/index.js',
+    pageLength: 1,
+    pathPrefix: '',
+    context: {},
+  })
 
   driveFolders.forEach(({ node }) => {
     const { name, slug } = node
@@ -271,7 +266,7 @@ function createDrivePages(driveData, cb, singleFilePages) {
         slug,
       },
     }
-    cb(page)
+    createPage(page)
   })
 
   if (singleFilePages) {
@@ -302,7 +297,7 @@ function createDrivePages(driveData, cb, singleFilePages) {
           filePath: `${slug}/${filePath}`,
         },
       }
-      cb(page)
+      createPage(page)
     })
   }
 }
